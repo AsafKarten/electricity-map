@@ -2,10 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from "react"
 
+import Login from './components/Login';
+
 export default function App() {
 
   useEffect(() => {
     initiateSocketConnection()
+    
   }, [])
 
   const initiateSocketConnection = () => {
@@ -15,22 +18,35 @@ export default function App() {
     // When a connection is made to the server, send the user ID so we can track which
     // socket belongs to which user
     ws.onopen = () => {
-      ws.send(
-        JSON.stringify({
-          userId: 20,
-        })
-      )
+      let start = new Date();
+      for (let i = 0; i < 1000; i++) {
+        let sendTime = new Date();
+        let time = sendTime - start;
+        
+          ws.send(
+            JSON.stringify({
+              message_number: i,
+              start_time: start,
+              send_time: sendTime,
+              time: time
+            })
+          )
+        
+        
+      }
     }
 
     // Ran when teh app receives a message from the server
     ws.onmessage = (e) => {
       console.log(e.data);
     }
+
   }
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Electricity-map App</Text>
+      <Login/>
       <StatusBar style="auto" />
     </View>
   );

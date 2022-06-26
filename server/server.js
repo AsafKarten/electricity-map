@@ -7,5 +7,20 @@ wss.on('connection', ws => {
   ws.on('message', message => {
     console.log(`Received message => ${message}`)
   })
-   ws.send('Hello! Message From Server!!!')
+  let start = new Date();
+      for (let i = 0; i < 1000; i++) {
+        let sendTime = new Date();
+        let time = sendTime - start;
+        
+          ws.send(
+            JSON.stringify({
+              message_number: i,
+              start_time: start,
+              send_time: sendTime,
+              time: time
+            })
+          )
+        
+        
+      }
 })
