@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from "react"
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from './components/Login';
-
+import Mapbox from './components/Mapbox';
 export default function App() {
 
   useEffect(() => {
@@ -43,12 +45,16 @@ export default function App() {
 
   }
 
+const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Electricity-map App</Text>
-      <Login/>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Mapbox" component={Mapbox} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
